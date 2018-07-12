@@ -1,0 +1,26 @@
+//Given two strings, a and b , that may or may not be of the same length, 
+//determine the minimum number of character deletions required to make a and b anagrams. 
+//Any characters can be deleted from either of the strings. eg abc, cde -> 4 would be the output because (a, b, d, e) has to be deleted here. 
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class Test {
+
+	public static void main(String args[]) throws Exception {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Integer number = Integer.valueOf(br.readLine());
+		for(int j = 0; j < number; j++) {
+		String a = br.readLine();
+		String b = br.readLine();
+		int[] chars = new int[26];
+	    for (char c1 : a.toCharArray()) { chars[c1-97]++; }
+	    for (char c2 : b.toCharArray()) { chars[c2-97]--; }
+	    int count = 0;
+	    for(int i: chars) {count += Math.abs(i);}
+
+	    System.out.println(count);
+	}
+	}
+}
