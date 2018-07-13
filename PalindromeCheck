@@ -1,0 +1,20 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class Test {
+
+	public static void main(String args[]) throws Exception {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String a = br.readLine();
+		StringBuffer sb = new StringBuffer(a);
+		sb.reverse();
+		if(a.equalsIgnoreCase(sb.toString())){
+			System.out.println("YES");
+		}
+		else {
+			System.out.println("NO");
+		}
+		
+	}
+}
