@@ -1,0 +1,180 @@
+//Play with numbers - Hackerearth solution. This code is interesting, comments suggest that we need to implement Fast Reader, Geeks for Geeks can help you with that.
+
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+class Test {
+	public static void main(String args[]) throws Exception {
+
+		FastReader fr = new FastReader();
+		StringBuilder sb = new StringBuilder();
+		int n = fr.nextInt();
+		int q = fr.nextInt();
+		long[] arr = new long[n];
+		arr[0] = fr.nextInt();
+		for(int i = 1; i < n; ++i){
+            arr[i] = arr[i - 1] + fr.nextInt();
+        }
+		int l, r, deno;
+        long sum;
+        while(q > 0) {
+        	l = fr.nextInt() - 1;
+            r = fr.nextInt() - 1;
+            
+            deno = r - l + 1;
+            if(l == 0){
+                sum = arr[r];
+            }else{
+                sum = arr[r] - arr[l - 1];
+            }
+            sb.append(sum/deno);
+            if(q != 1){
+                sb.append("\n");
+            }
+            --q;
+        }
+        System.out.print(sb.toString());
+        fr.close();
+
+	}
+}
+
+class FastReader {
+	final private int BUFFER_SIZE = 1 << 16;
+	private DataInputStream din;
+	private byte[] buffer;
+	private int bufferPointer, bytesRead;
+
+	public FastReader() {
+		din = new DataInputStream(System.in);
+		buffer = new byte[BUFFER_SIZE];
+		bufferPointer = bytesRead = 0;
+	}
+
+	public FastReader(String file_name) {
+		try {
+			din = new DataInputStream(new FileInputStream(file_name));
+			buffer = new byte[BUFFER_SIZE];
+			bufferPointer = bytesRead = 0;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String readLine() {
+		StringBuilder sb = new StringBuilder();
+		byte c;
+		while ((c = read()) != -1) {
+			if (c == '\n') {
+				break;
+			}
+			sb.append((char) c);
+		}
+		return sb.toString();
+	}
+
+	public String readLine(int size) {
+		byte[] buf = new byte[size];
+		int cnt = 0, c;
+		while ((c = read()) != -1) {
+			if (c == '\n') {
+				break;
+			}
+			buf[cnt++] = (byte) c;
+		}
+		return new String(buf, 0, cnt);
+	}
+
+	public int nextInt() {
+		int n = 0;
+		boolean neg = false;
+		int c;
+		while ((c = read()) <= ' ')
+			;
+		neg = c == '-';
+		if (neg) {
+			c = read();
+		}
+		do {
+			n = n * 10 + c - '0';
+		} while ((c = read()) >= '0' && c <= '9');
+		if (c == 13) {
+			read();
+		}
+		return neg ? -n : n;
+	}
+
+	public long nextLong() {
+		long n = 0;
+		boolean neg = false;
+		int c;
+		while ((c = read()) <= ' ')
+			;
+		neg = c == '-';
+		if (neg) {
+			c = read();
+		}
+		do {
+			n = n * 10 + c - '0';
+		} while ((c = read()) >= '0' && c <= '9');
+		if (c == 13) {
+			read();
+		}
+		return neg ? -n : n;
+	}
+
+	public double nextDouble() {
+		double n = 0, div = 1;
+		boolean neg = false;
+		int c;
+		while ((c = read()) <= ' ')
+			;
+		neg = c == '-';
+		if (neg) {
+			c = read();
+		}
+		do {
+			n = n * 10 + c - '0';
+		} while ((c = read()) >= '0' && c <= '9');
+		if (c == '.') {
+			while ((c = read()) >= '0' && c <= '9') {
+				n += (c - '0') / (div *= 10);
+			}
+		}
+		if (c == 13) {
+			read();
+		}
+		return neg ? -n : n;
+	}
+
+	private void fillBuffer() {
+		try {
+			bytesRead = din.read(buffer, bufferPointer = 0, BUFFER_SIZE);
+			if (bytesRead == -1) {
+				buffer[0] = -1;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public byte read() {
+		if (bufferPointer == bytesRead) {
+			fillBuffer();
+		}
+		return buffer[bufferPointer++];
+	}
+
+	public void close() {
+		try {
+			if (din == null) {
+				return;
+			} else {
+				din.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
