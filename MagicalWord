@@ -1,0 +1,109 @@
+//Magical Word (Dhananjay) - Hackerearth solution - Basics of input/output
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class Test {
+
+	public static void main(String[] args) throws Exception {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int num = Integer.valueOf(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i <= num - 1; i++) {
+			int length = Integer.valueOf(br.readLine());
+			String name = br.readLine();
+			sb = processName(name);
+			System.out.println(sb);
+		}
+		
+	}
+
+	private static StringBuilder processName(String name) {
+
+		StringBuilder sb = new StringBuilder();
+		char[] c = name.toCharArray();
+
+		for (char i : c) {
+			int ascii = (int) i;
+			boolean checkPrime = checkPrime(ascii);
+			if (checkPrime) {
+				sb.append(String.valueOf((char) checkASCII(ascii)));
+			} else {
+				boolean u = false;
+				while (!u) {
+					int nearNumber = getNumber(ascii);
+					u = checkPrime(nearNumber);
+					if (u) {
+						sb.append(String.valueOf((char) checkASCII(nearNumber)));
+						break;
+					}
+				}
+			}
+
+		}
+		return sb;
+	}
+
+	private static int getNumber(int ascii) {
+
+		int minus = 0, plus = 0, incrementPlus = 0, incrementMinus = 0, plusVal = 0, minusVal = 0;
+		boolean right = false, left = false;
+		while (!right) {
+			plus = incrementPlus + ascii;
+			right = checkPrime(plus);
+			if (right) {
+				plusVal = plus;
+				break;
+			}
+			incrementPlus++;
+		}
+		while (!left) {
+			minus = ascii - incrementMinus;
+			left = checkPrime(minus);
+			if (left) {
+				minusVal = minus;
+				break;
+			}
+			incrementMinus++;
+		}
+		if (Math.abs(ascii - minusVal) <= Math.abs(plusVal - ascii)) {
+			return minusVal;
+		}
+		return plusVal;
+	}
+
+	private static int checkASCII(int ascii) {
+
+		if (ascii < 65) {
+			ascii = 67;
+		} else if (ascii > 90 && ascii < 97) {
+			ascii = getNumber(ascii);
+		} else if (ascii > 122) {
+			ascii = 113;
+		}
+		return ascii;
+	}
+
+	private static boolean checkPrime(int ascii) {
+
+		int i, m = 0, flag = 0;
+		int n = ascii;
+		m = n / 2;
+		if (n == 0 || n == 1) {
+			return false;
+		} else {
+			for (i = 2; i <= m; i++) {
+				if (n % i == 0) {
+					flag = 1;
+					break;
+				}
+			}
+			if (flag == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+}
