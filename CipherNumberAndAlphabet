@@ -1,0 +1,42 @@
+//caesar cipher - Alphabets and numbers - Hackerearth
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Test {
+
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		char[] s = br.readLine().toCharArray();
+		int k = Integer.valueOf(br.readLine());
+		StringBuilder sb = new StringBuilder();
+
+		for (char a : s) {
+			int c = (int) a;
+
+			if ((c >= 65 && c <= 90) || (c >= 48 && c <= 57) || (c >= 97 && c <= 122)) {
+				if ((c >= 119 && c <= 122) || (c >= 87 && c <= 90)) {
+					if (k % 26 != 0) {
+						c = c - (26 - (k % 26));
+					}
+				} else if (c >= 48 && c <= 57) {
+					c = ((c) + (k % 10));
+					if (c > 57) {
+						c = c - 10;
+					}
+				} else if ((c >= 65 && c <= 86) || (c >= 97 && c <= 118)) {
+					c += (k % 26);
+				}
+				sb.append((char) c);
+			} else {
+				sb.append((char) c);
+			}
+
+		}
+		System.out.println(sb);
+	}
+
+}
