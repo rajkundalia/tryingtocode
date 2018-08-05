@@ -1,0 +1,70 @@
+//hackerearth PLUS PLUS problem
+
+/*
+You are given a two dimensional grid  of size  ( rows and  columns). Your task is to select two non overlapping Plus signs from the grid and do multiplication with corresponding elements and find out summation. What is the maximum summation.
+
+Note: The Plus sign will be formed by 5 cells which have coordinates of form , , , , . The center of the Plus sign cannot lie on boundary of the grid.Over lapping Plus signs would have atleast one cell in common. Please, see the explanation below for exact figure. 
+
+INPUT
+
+First line contains two space separated integers  and , denoting size of array .
+Next  lines contains  space separated integers.
+OUTPUT
+
+Print the required maximum value.
+Constraints:
+
+SAMPLE INPUT 
+6 6
+4 0 8 4 3 0
+7 8 3 4 7 4
+9 2 6 0 5 8
+2 0 6 3 9 7
+1 5 0 5 6 3
+5 0 0 0 4 1
+SAMPLE OUTPUT 
+166
+*/
+
+import java.util.Scanner;
+
+class Test {
+
+	public static void main(String args[]) {
+
+		Scanner s = new Scanner(System.in);
+		String a = s.nextLine();
+		String[] b = a.trim().split(" ");
+		int n = Integer.parseInt(b[0]);
+		int m = Integer.parseInt(b[1]);
+		int[][] arr = new int[n][m];
+		for (int i = 0; i < n; i++) {
+
+			String c = s.nextLine();
+			String[] d = c.trim().split(" ");
+			for (int j = 0; j < m; j++) {
+				arr[i][j] = Integer.parseInt(d[j]);
+			}
+		}
+
+		int max = 0;
+		for (int i = 1; i < n - 1; i++) {
+			for (int j = 1; j < m - 1; j++) {
+				for (int k = 1; k < n - 1; k++) {
+					int mul = 0;
+					for (int l = 1; l < m - 1; l++) {
+						if (i != k && j != l) {
+							mul = arr[i - 1][j] * arr[k - 1][l] + arr[i + 1][j] * arr[k + 1][l] + arr[i][j] * arr[k][l]
+									+ arr[i][j - 1] * arr[k][l - 1] + arr[i][j + 1] * arr[k][l + 1];
+						}
+						if (mul > max) {
+							max = mul;
+						}
+					}
+				}
+			}
+		}
+		System.out.println(max);
+	}
+
+}
