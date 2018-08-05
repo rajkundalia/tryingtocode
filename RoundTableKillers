@@ -1,0 +1,59 @@
+/*
+Round Table Killers - Hackerearth - Basics of Implementation
+
+There is a round table in which N people are sitting. You can look at the image for their seating arrangement. 
+Initially the person numbered X holds a gun. In addition to it there is a special number K that helps in determining the persons to be 
+killed. The killing starts as follows - Firstly the person numbered X starts and he kills a total of X%K people sitting clockwise of him and he gives gun to the person i who is sitting just next to the last person killed. Now that person also kills the next i%K people and this goes on. If at any instant the total persons that are remaining is not greater than i%K where i is the number of person holding the gun then the person i wins. You can show that sooner or later only one person remains. So your job is to decide which numbered person will win this killing game.
+X%K is the remainder when X is divided by K 
+Input
+First line contains three numbers N , K and X as input.
+Output
+In the output you have to tell the number of the player who will be the winner.
+Constraints
+
+SAMPLE INPUT 
+5 2 3
+SAMPLE OUTPUT 
+3
+
+*/
+
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Test {
+
+	public static void main(String args[]) throws IOException {
+
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int k = sc.nextInt();
+		int x = sc.nextInt();
+		ArrayList<Integer> ar = new ArrayList<Integer>();
+		for (int i = 1; i <= n; i++) {
+			ar.add(i);
+		}
+		int toBeKilledIndex = 0;
+		while(ar.size() != 1) {
+			int toBeKilledNumber = x % k;
+			int flag = 0;
+			for(int i = 1; i<=toBeKilledNumber && ar.size() != 1; i++) {
+				toBeKilledIndex = (ar.indexOf(x) + 1)%ar.size();
+				ar.remove(toBeKilledIndex);
+				flag = 1;
+			}
+			if(flag == 1) {
+				x = ar.get(toBeKilledIndex% ar.size());
+			}
+			else {
+				x = ar.get((toBeKilledIndex + 1) % ar.size());
+			}
+			
+		}
+		System.out.println(x);
+
+	}
+
+}
