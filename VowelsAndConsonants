@@ -1,0 +1,88 @@
+/*
+Vowels and Consonants
+Given a character sequence find the count of all contiguous subsequences such that each subsequence is of length greater than 1 and the sequence alternates between a vowel and a consonant.
+
+Input Format
+First line of test case consists of an integer t denoting the number of test cases. Next t test cases follow. Each test case consists of two lines. First line of each test case is the length of the character sequence. Second line is the character sequence.
+
+Sample Input
+4
+9
+ambiguous
+5
+aeiou
+21
+bcdfghjklmnpqrstvwxyz
+45
+pneumonoultramicroscopicsilicovolcanoconiosis
+Sample Output
+8
+0
+0
+105
+Constraints
+1 <= t <= 1000
+
+1 <= |s| <= 1000
+
+character set of s - a-z
+
+Vowels
+aeiou
+Consonants
+bcdfghjklmnpqrstvwxyz
+Explanation
+For the character sequence ambiguous, there are 8 possible contiguous subsequences viz. am, bi, big, bigu, ig, igu, gu, us which satisfy the condition.
+*/
+
+import java.util.*;
+
+public class VowelsAndConsonants {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        for (int i = 0; i < T; i++) {
+            int len = sc.nextInt();
+            System.out.println(subStr(sc.next(), len));
+        }
+    }
+
+    public static int subStr(String str, int n) {
+        List<String> st = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j <= n; j++) {
+                String temp = str.substring(i, j);
+                if (isOk(temp)) {
+                    st.add(temp);
+                }
+            }
+        }
+        return st.size();
+    }
+
+    private static boolean isOk(String temp) {
+        int len = temp.length();
+        boolean check = false;
+        for (int i = 0; i < len - 1; i++) {
+            if ((isVowel(temp.charAt(i)) && isConsonant(temp.charAt(i + 1))) ||
+                    (isConsonant(temp.charAt(i)) && isVowel(temp.charAt(i + 1)))) {
+                check = true;
+            } else {
+                check = false;
+                break;
+            }
+        }
+        return check;
+    }
+
+    static boolean isVowel(char c) {
+        return (c == 'a' || c == 'e' || c == 'i' || c == 'o'
+                || c == 'u');
+    }
+
+    static boolean isConsonant(char c) {
+        return !(c == 'a' || c == 'e' || c == 'i' || c == 'o'
+                || c == 'u');
+    }
+}
