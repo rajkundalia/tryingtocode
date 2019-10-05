@@ -34,7 +34,75 @@ bcdfghjklmnpqrstvwxyz
 Explanation
 For the character sequence ambiguous, there are 8 possible contiguous subsequences viz. am, bi, big, bigu, ig, igu, gu, us which satisfy the condition.
 */
+//==============================efficient correct solution====================================================
+import java.util.*;
 
+public class solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        for (int i = 0; i < T; i++) {
+            int len = sc.nextInt();
+            System.out.println(subStr(sc.next(), len));
+        }
+    }
+
+    public static int subStr(String str, int n) {
+        int count = 0;
+        int sum = 0;
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            if (isVowel(str.charAt(i))) {
+                arr[i] = 1;
+            }
+        }
+        for (int i = 0; i < n - 1; i++) {
+            arr[i] = arr[i] ^ arr[i + 1];
+        }
+        arr[n - 1] = 0;
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 1) {
+                count++;
+            } else {
+                if (count >= 1) {
+                    list.add(count);
+                }
+                count = 0;
+            }
+        }
+        for (int i : list) {
+            sum += i * (i + 1) / 2;
+        }
+        return sum;
+    }
+
+    static boolean isVowel(char c) {
+        return (c == 'a' || c == 'e' || c == 'i' || c == 'o'
+                || c == 'u');
+    }
+}
+
+
+/*
+a m b i g u o u s
+1 0 0 1 0 1 1 1 0 ( 1 for vowel and 0 for consonant)
+Now here you have to count the number of contiguous subsequences such that we have alternating vowels and consonants.
+So, since XOR of different bits is 1 and same bits is 0
+We can do XOR of each bit with the neighboring bit
+So
+1 0 0 1 0 1 1 1 0
+=> 1 0 1 1 1 0 0 1 (xored array)
+Now the subsequence like 1010 contains 3(starting from index 0) + 2(starting from bit position 1) + 1(starting from index 2) = 6 subsequences with alternating V and C, i.e. its XOR => 1 1 1 => n * (n + 1) / 2 subsequences with alternating V and C
+So you need to find the count of contiguous 1s in each group
+=> 1 0 1 1 1 0 0 1 (xored array)
+1 3 1
+For each do n * (n + 1) / 2 => 1 + 6 + 1 = 8 ans
+*/
+
+
+//==============================Inefficient but correct solution====================================================
 import java.util.*;
 
 public class VowelsAndConsonants {
