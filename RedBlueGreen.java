@@ -53,8 +53,8 @@ public class solution {
 
     private static int subStr(String str, int n) {
         List<String> st = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j <= n; j++) {
+        for (int i = 0; i < n - 2; i++) {
+            for (int j = i + 2; j <= n; j++) {
                 String temp = str.substring(i, j);
                 if (temp.length() >= 3 && isOk(temp)) {
                     st.add(temp);
@@ -82,3 +82,4 @@ public class solution {
         return check;
     }
 }
+
