@@ -1,6 +1,8 @@
 import java.util.*;
 
 /*
+
+This is not the CORRECT SOLUTION.
 Dimmest Star
 Sophia is sitting on the roof of her house on a moonless night looking up at a collection of stars. She mentally marked them with numbers from 1 to n. She picked out the brightest star in the sky and connected them with other stars in decreasing order of brightness.
 
