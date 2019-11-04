@@ -90,71 +90,206 @@ For each test case, output an integer which represents the dimmest star in the s
 
  */
 
-class Graph {
-    private int V;
-    private LinkedList<Integer> adj[];
-
-    Graph(int v) {
-        V = v;
-        adj = new LinkedList[v];
-        for (int i = 1; i < v; ++i)
-            adj[i] = new LinkedList();
-    }
-
-    void addEdge(int v, int w) {
-        adj[v].add(w);
-    }
-
-    int maxSizeOfEdge(int v) {
-        int size = 0;
-        for (int i = 1; i < v; i++) {
-            int k = adj[i].size();
-            if (k > size) {
-                size = k;
-            }
-        }
-        return size > 1 ? size : 1;
-    }
-
-    List<Integer> BFS(int s) {
-        boolean visited[] = new boolean[V];
-        LinkedList<Integer> queue = new LinkedList<Integer>();
-        visited[s] = true;
-        queue.add(s);
-        List<Integer> list = new ArrayList<>();
-
-        while (queue.size() != 0) {
-            s = queue.poll();
-            list.add(s);
-            //System.out.print(s + " ");
-            Iterator<Integer> i = adj[s].listIterator();
-            while (i.hasNext()) {
-                int n = i.next();
-                if (!visited[n]) {
-                    visited[n] = true;
-                    queue.add(n);
-                }
-            }
-        }
-        return list;
-    }
-
-}
+import java.io.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Queue;
 
 public class solution {
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
-        int T = sc.nextInt();
+
+    public static void main(String[] args) {
+
+        InputReader sc = new InputReader(System.in);
+        //PrintWriter pw = new PrintWriter(System.out);
+        int T = sc.readInt();
         while (T-- > 0) {
-            int nodes = sc.nextInt();
-            Graph g = new Graph(nodes + 1);
-            for (int i = 0; i < nodes - 1; i++) {
-                g.addEdge(sc.nextInt(), sc.nextInt());
+            int n = sc.readInt();
+            ArrayList<Integer> arr[] = new ArrayList[n + 1];
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = new ArrayList<>();
             }
-            List<Integer> list = g.BFS(sc.nextInt());
-            System.out.println(list);
-            System.out.println(list.get(list.size() - g.maxSizeOfEdge(nodes + 1)));
+            int inEdge[] = new int[n + 1];
+            int outEdge[] = new int[n + 1];
+            for (int i = 0; i < n - 1; i++) {
+                int u = sc.readInt();
+                int v = sc.readInt();
+                arr[u].add(v);
+                outEdge[u]++;
+                inEdge[v]++;
+            }
+            int start = sc.readInt();
+            Queue<Integer> q = new ArrayDeque<>();
+            ArrayList<Integer> lastLevel = new ArrayList<>();
+            ArrayList<Integer> currentLevel = new ArrayList<>();
+            q.add(start);
+            q.add(-1);
+            while (!q.isEmpty()) {
+                int parent = q.poll();
+                if (parent == -1) {
+                    if (!currentLevel.isEmpty()) {
+                        lastLevel.clear();
+                        lastLevel.addAll(currentLevel);
+                        currentLevel.clear();
+                        if (!q.isEmpty()) {
+                            q.add(-1);
+                        }
+                    }
+                } else {
+                    for (Integer i : arr[parent]) {
+                        currentLevel.add(i);
+                        q.add(i);
+                    }
+                }
+            }
+            int min = Integer.MAX_VALUE;
+            for (int i : lastLevel) {
+                min = Math.min(min, i);
+            }
+            System.out.println(min);
+        }
+    }
+
+    private static class InputReader {
+        private InputStream stream;
+        private byte[] buf = new byte[1024];
+        private int curChar;
+        private int numChars;
+        private SpaceCharFilter filter;
+
+        public InputReader(InputStream stream) {
+            this.stream = stream;
         }
 
+        public int read() {
+            if (numChars == -1) {
+                throw new InputMismatchException();
+            }
+            if (curChar >= numChars) {
+                curChar = 0;
+                try {
+                    numChars = stream.read(buf);
+                } catch (IOException e) {
+                    throw new InputMismatchException();
+                }
+                if (numChars <= 0) {
+                    return -1;
+                }
+            }
+            return buf[curChar++];
+        }
+
+        public int readInt() {
+            int c = read();
+            while (isSpaceChar(c)) {
+                c = read();
+            }
+            int sgn = 1;
+            if (c == '-') {
+                sgn = -1;
+                c = read();
+            }
+            int res = 0;
+            do {
+                if (c < '0' || c > '9') {
+                    throw new InputMismatchException();
+                }
+                res *= 10;
+                res += c - '0';
+                c = read();
+            } while (!isSpaceChar(c));
+            return res * sgn;
+        }
+
+        public String readString() {
+            int c = read();
+            while (isSpaceChar(c)) {
+                c = read();
+            }
+            StringBuilder res = new StringBuilder();
+            do {
+                res.appendCodePoint(c);
+                c = read();
+            } while (!isSpaceChar(c));
+            return res.toString();
+        }
+
+        public double readDouble() {
+            int c = read();
+            while (isSpaceChar(c)) {
+                c = read();
+            }
+            int sgn = 1;
+            if (c == '-') {
+                sgn = -1;
+                c = read();
+            }
+            double res = 0;
+            while (!isSpaceChar(c) && c != '.') {
+                if (c == 'e' || c == 'E') {
+                    return res * Math.pow(10, readInt());
+                }
+                if (c < '0' || c > '9') {
+                    throw new InputMismatchException();
+                }
+                res *= 10;
+                res += c - '0';
+                c = read();
+            }
+            if (c == '.') {
+                c = read();
+                double m = 1;
+                while (!isSpaceChar(c)) {
+                    if (c == 'e' || c == 'E') {
+                        return res * Math.pow(10, readInt());
+                    }
+                    if (c < '0' || c > '9') {
+                        throw new InputMismatchException();
+                    }
+                    m /= 10;
+                    res += (c - '0') * m;
+                    c = read();
+                }
+            }
+            return res * sgn;
+        }
+
+        public long readLong() {
+            int c = read();
+            while (isSpaceChar(c)) {
+                c = read();
+            }
+            int sgn = 1;
+            if (c == '-') {
+                sgn = -1;
+                c = read();
+            }
+            long res = 0;
+            do {
+                if (c < '0' || c > '9') {
+                    throw new InputMismatchException();
+                }
+                res *= 10;
+                res += c - '0';
+                c = read();
+            } while (!isSpaceChar(c));
+            return res * sgn;
+        }
+
+        public boolean isSpaceChar(int c) {
+            if (filter != null) {
+                return filter.isSpaceChar(c);
+            }
+            return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
+        }
+
+        public String next() {
+            return readString();
+        }
+
+        public interface SpaceCharFilter {
+            public boolean isSpaceChar(int ch);
+        }
     }
 }
+
