@@ -1,0 +1,59 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+
+
+class Result {
+
+    /*
+      A-ZZ i.e. 26*27 columns i.e. 702 columns
+      
+      703 - 2A.
+      27 - 1AA.
+    
+    
+     * Complete the 'getSpreadsheetNotation' function below.
+     *
+     * The function is expected to return a STRING.
+     * The function accepts LONG_INTEGER n as parameter.
+     */
+
+    public static String getSpreadsheetNotation(long n) {
+    // Write your code here
+        StringBuilder columnName = new StringBuilder();
+        String result = "";
+        long columnNumber = n % 702;
+        if(n == 702l){
+            return (n/702l) + "ZZ";    
+        }
+        if (columnNumber == 0){
+            return (n/702l) + 1 + "" + "ZZ";
+        }
+        while (columnNumber > 0) 
+        { 
+            long rem = columnNumber % 26;  
+            if (rem == 0) { 
+                columnName.append("Z"); 
+                columnNumber = (columnNumber / 26) - 1; 
+            } 
+            else { 
+                columnName.append((char)((rem - 1) + 'A')); 
+                columnNumber = columnNumber / 26; 
+            } 
+        } 
+        result = (n/702l) + 1 + columnName.reverse().toString();
+        return result; 
+    }
+
+}
+
+public class Solution {
