@@ -1,2 +1,3 @@
 # tryingtocode
-Building up a repository is the new cool!
+Contains the solutions to various hiring challenges.
+
