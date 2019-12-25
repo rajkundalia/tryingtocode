@@ -1,0 +1,29 @@
+Cars
+A dataset of Cars is provided in a file (cars_input1.txt). The file has the three fields for each car: Name, Origin, Horsepower. Given this file and given a number N, and an origin O, print N cars that have horsepower greater than the average horsepower of all the cars from origin O. Note that the average horsepower should be computed from the cars of the given origin and not the whole dataset. The path to the dataset and the values of N and O will be passed as arguments to the program on command line.
+
+For example, in the dataset below:
+	Chevrolet Chevelle Malibu,130.0,US
+	Buick Skylark 320,165.0,US
+	Plymouth Satellite,150.0,US
+	Volkswagen 1131 Deluxe Sedan,46.0,Europe
+	Peugeot 504,87.0,Europe
+	Audi 100 LS,90.0,Europe
+
+Given N=1 and O=US, the output should be:
+	Buick Skylark 320,165.0,US
+Given N=2 and O=US, the output should be:
+	Buick Skylark 320,165.0,US
+	Plymouth Satellite,150.0,US
+Given N=3 and O=US, the output should be:
+	Buick Skylark 320,165.0,US
+	Plymouth Satellite,150.0,US
+
+Similarly,
+Given N=1 and O=Europe, the output should be:
+	Audi 100 LS,90.0,Europe
+Given N=2 and O=Europe, the output should be:
+	Peugeot 504,87.0,Europe
+	Audi 100 LS,90.0,Europe
+Given N=3 and O=Europe, the output should be:
+	Peugeot 504,87.0,Europe
+	Audi 100 LS,90.0,Europe
