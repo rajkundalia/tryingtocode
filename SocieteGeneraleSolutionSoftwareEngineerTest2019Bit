@@ -1,0 +1,56 @@
+/**
+
+SocieteGeneral Software Engineering Test Bit Permutations Given a positive integer find the sum of all integers derived from unique permutations of its bits.
+
+Input Format First line of input consists of an integer t denoting the number of test cases. t lines follow each containing an integer n.
+
+Output Format For each test case, sum of all integers derived from unique permutations of its bits.
+
+Sample Input 6 1 7 9 21 31 32 Sample Output 1 7 45 186 31 63 Explanation For the integer 21, the binary representation is 10101. One can get 10 unique permutations of its bits listed below.
+
+00111 7 01011 11 01101 13 01110 14 10011 19 10101 21 10110 22 11001 25 11010 26 11100 28 Adding the corresponding integers
+
+7 + 11 + 13 + 14 + 19 + 21 + 22 + 25 + 26 + 28 = 186
+
+Hence answer is 186.
+
+Constraints 1< = t <= 1000 1 <= n <= 10000
+**/
+
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+public class solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        for (int i = 0; i < t; i++) {
+            ArrayList<String> list = distinctPermute(Integer.toBinaryString(sc.nextInt()));
+            int sum = list.stream().mapToInt(a -> Integer.parseInt(a, 2)).sum();
+            System.out.println(sum);
+        }
+    }
+    
+    static ArrayList<String> distinctPermute(String str) {
+        if (str.length() == 0) {
+            ArrayList<String> baseRes = new ArrayList<>();
+            baseRes.add("");
+            return baseRes;
+        }
+        char ch = str.charAt(0);
+        String restStr = str.substring(1);
+        ArrayList<String> prevRes = distinctPermute(restStr);
+
+        Set<String> res = new HashSet<>();
+        for (String s : prevRes) {
+            for (int i = 0; i <= s.length(); i++) {
+                String f = s.substring(0, i) + ch + s.substring(i);
+                res.add(f);
+            }
+        }
+        return new ArrayList<>(res);
+    }
+}
