@@ -1,0 +1,5 @@
+-- Manager Names
+SELECT E1.name, E2.name FROM Employee E1 LEFT JOIN Employee E2 ON E1.manager_id = E2.id;
+
+-- Managers
+SELECT m.id, m.name FROM Employee e, Employee m where e.manager_id = m.id GROUP BY m.name HAVING COUNT(e.name) > 1 ORDER BY m.id;
