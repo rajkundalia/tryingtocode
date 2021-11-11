@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class GetKeyPadCombinationWithoutList {
+public class PrintKeyPadCombinationWithoutList {
     public static void main(String[] args) {
         String str = "123";
         getKPC(str, "");
