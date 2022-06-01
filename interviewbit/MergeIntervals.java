@@ -33,19 +33,27 @@ public class MergeIntervals {
         int end = newInterval.end;
         boolean check = false;
         for (int i = 0; i < n; i++) {
+            // case where interval is smaller and out of range from newInterval
             if (intervals.get(i).end < start) {
                 ans.add(intervals.get(i));
-            } else if (intervals.get(i).start > end) {
+            }
+            // case where interval is larger and out of range from newInterval
+            else if (intervals.get(i).start > end) {
                 if (!check) {
+                    // this is to make sure that newInterval gets added and sorting order is maintained before larger
+                    // interval is added
                     ans.add(new Interval(start, end));
                 }
                 ans.add(intervals.get(i));
                 check = true;
             } else {
+                // this scenario when there is clear overlap as a whole either of the interval or newInterval
+                //Example 2 can be debugged for that
                 start = Math.min(start, intervals.get(i).start);
                 end = Math.max(end, intervals.get(i).end);
             }
         }
+        // just in case that second condition never fulfils and start and end keep expanding
         if (!check) {
             ans.add(new Interval(start, end));
         }
