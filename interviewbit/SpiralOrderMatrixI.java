@@ -3,7 +3,10 @@ package interviewbit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatrixInSpiral {
+/*
+https://www.interviewbit.com/problems/spiral-order-matrix-i/
+*/
+public class SpiralOrderMatrixI {
     public static void main(String[] args) {
         List<List<Integer>> list = new ArrayList<>();
         List<Integer> list1 = new ArrayList<>();
