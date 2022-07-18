@@ -34,7 +34,7 @@ public class ExcelColumnTitle {
         while (A != 0) {
             A--;
             /*
-            It is because there’s a case where n = 26 or a multiple of 26, 
+            A-- because there’s a case where n = 26 or a multiple of 26, 
             so n%26 will be equal to 0, this 0 should correspond to ‘Z’. 
             So, in this solution, doing A - 1 ensures that 0 corresponds to ‘A’, 1 to ‘B’…, 25 to ‘Z’. 
             This way we don’t have to worry about the base case.
