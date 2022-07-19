@@ -43,6 +43,7 @@ Output 4:
     [20, 113, 50]
  */
 //2.21 NEXT PERMUTATION (Arrays)-Interviewbit bhaicodekaro: https://youtu.be/sCCRFjFJv38
+// This is similar to NextSimilarNumber of Math section in Interviewbit.
 public class NextPermutation {
     public static void main(String[] args) {
         System.out.println(solveNextPermutation(new ArrayList<>(List.of(1, 3, 4, 2))));
@@ -55,7 +56,7 @@ public class NextPermutation {
         // step 1: find the element smaller than the last element in the list in a loop
         // e.g. 1 3 4 2, so index = 1
         // meaning: the element that breaks increasing order starting from the last element
-        // e.g. 1 2 4 3 -> 3>4 but then 2<4 so it breaks the increasing order from the end
+        // e.g. 1 2 4 3 -> 4>3 but then 2<4 so it breaks the increasing order from the end
         for (int i = n - 2; i >= 0; i--) {
             if (a.get(i) < a.get(i + 1)) {
                 index = i;
@@ -65,6 +66,7 @@ public class NextPermutation {
         int x = 0;
         int y = n - 1;
         // step 2: reversing the whole list if there is all elements are in descending order
+        // This is given in the question
         if (index == -1) {
             while (x < y) {
                 swap(a, x, y);
