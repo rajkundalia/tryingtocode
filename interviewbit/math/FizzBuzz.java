@@ -19,6 +19,50 @@ Return: [1 2 Fizz 4 Buzz]
 public class FizzBuzz {
     public static void main(String[] args) {
         System.out.println(solveFizzBuzz(5));
+        System.out.println(solveFizzBuzz1(5));
+        System.out.println(solveFizzBuzz2(5));
+    }
+
+    public static ArrayList<String> solveFizzBuzz2(int A) {
+        ArrayList<String> result = new ArrayList<>();
+        int c3 = 0;
+        int c5 = 0;
+        for (int i = 1; i <= A; i++) {
+            c3++;
+            c5++;
+            String d = "";
+            if (c3 == 3) {
+                d += "Fizz";
+                c3 = 0;
+            }
+            if (c5 == 5) {
+                d += "Buzz";
+                c5 = 0;
+            }
+            if (d == "") {
+                d += i;
+            }
+            result.add(d);
+        }
+        return result;
+    }
+
+    public static ArrayList<String> solveFizzBuzz1(int A) {
+        ArrayList<String> result = new ArrayList<>();
+        for (int i = 1; i <= A; i++) {
+            String d = "";
+            if (i % 3 == 0) {
+                d += "Fizz";
+            }
+            if (i % 5 == 0) {
+                d += "Buzz";
+            }
+            if (d == "") {
+                d += i;
+            }
+            result.add(d);
+        }
+        return result;
     }
 
     public static ArrayList<String> solveFizzBuzz(int A) {
