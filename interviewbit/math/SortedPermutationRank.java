@@ -18,10 +18,13 @@ bca
 cab
 cba
 The answer might not fit in an integer, so return your answer % 1000003
+
+Approach 2 seems better.
  */
 public class SortedPermutationRank {
     public static void main(String[] args) {
-        System.out.println(findSortedPermutationRank("cba"));
+        System.out.println(findSortedPermutationRank("gTFAMYjxCewRlftmGOKJHUuhSBVDZnbqyoPQadEkLrpNsv"));
+        System.out.println(findSortedPermutationRankApproach2("gTFAMYjxCewRlftmGOKJHUuhSBVDZnbqyoPQadEkLrpNsv"));
     }
 
     /*
@@ -62,6 +65,9 @@ public class SortedPermutationRank {
         Arrays.sort(strArray);
         String s = String.join("", strArray);
         int n = str.length();
+        if (n == 1) {
+            return 1;
+        }
         int[] fact = new int[n];
         factorial(fact, n);
         int index = 0;
@@ -78,7 +84,7 @@ public class SortedPermutationRank {
                 i = -1; // so that loop starts from 0 again
             }
         }
-        return ans + 1;
+        return (ans + 1) % 1000003;
     }
 
     private static void factorial(int[] fact, int n) {
@@ -87,5 +93,66 @@ public class SortedPermutationRank {
         for (int i = 2; i < n; i++) {
             fact[i] = i * fact[i - 1] % 1000003;
         }
+    }
+
+    /*
+        Explanation:
+            ibytes -> 6! = 720 possibilities
+            sorted order = beisty
+            b_____ 5!
+            e_____ 5!
+
+            ibe___ 3!
+            ibs___ 3!
+            ibt___ 3!
+
+            ibye__ 2!
+            ibys__ 2!
+
+            then comes ibytes position
+
+            approach in code:
+            We take an array of size 256 i.e. it should be in range of ascii values of characters
+            We are making an array which stores all factorials from 1 to n, where n can be a maximum of 26 because no
+            repetition of characters.
+            We fill the array with size 256 based on ascii values of characters as the index.
+            Now b and e are smaller than i, so 2*5! and then in array of size 256, arr['i'] = 0;
+            We move on to the letter b. It is the smallest.
+            Now we move on to the letter y. e,s,t are smaller, so 3*3! is added.
+            We move on to letter t, e and s are smaller so 2*2!.
+            We move on to letter e, is smaller now.
+            We move on to letter s, smallest among remaining.
+            o/p:263
+
+            Debug the code, you'd understand the logic
+            https://youtu.be/uUN8fVPrJn0
+     */
+    public static int findSortedPermutationRankApproach2(String s) {
+        int n = s.length();
+        if (n == 1) {
+            return 1;
+        }
+        int[] arr = new int[256];
+        int[] fact = new int[n];
+        factorial(fact, n);
+        for (int i = 0; i < n; i++) {
+            arr[s.charAt(i)]++;
+        }
+        int numberOfLetterSmaller;
+        int output = 0;
+        for (int i = 0; i < n; i++) {
+            numberOfLetterSmaller = 0;
+            for (int j = 0; j < 256; j++) {
+                if (j == s.charAt(i)) {
+                    break;
+                }
+                if (arr[j] == 1) {
+                    numberOfLetterSmaller++;
+                }
+            }
+            arr[s.charAt(i)] = 0;
+            output += numberOfLetterSmaller * fact[n - i - 1] % 1000003;
+        }
+        return (output + 1) % 1000003;
     }
 }
