@@ -28,10 +28,13 @@ public class GreatestCommonDivisor {
     }
 
     /*
-       If we examine the Euclidean Algorithm we can see that it makes use of the following properties:
-       GCD(A,0) = A
-       GCD(0,B) = B
-       If A = B*Q + R and B≠0 then GCD(A,B) = GCD(B,R) where Q is an integer, R is an integer between 0 and B-1
+    Basic Euclidean Algorithm for GCD: The algorithm is based on the below facts.
+
+    If we subtract a smaller number from a larger one (we reduce a larger number), GCD doesn’t change.
+
+    So if we keep subtracting repeatedly the larger of two, we end up with GCD.
+    Now instead of subtraction, if we divide the smaller number, the algorithm stops when we find the remainder 0.
+    Below is a recursive function to evaluate gcd using Euclid’s algorithm.
      */
     public static int gcd(int a, int b) {
         return (b == 0) ? a : gcd(b, a % b);
