@@ -1,6 +1,7 @@
 package interviewbit.math;
 
 /*
+https://www.interviewbit.com/problems/numbers-of-length-n-and-value-less-than-k/
   Given a set of digits (A) in sorted order, find how many numbers of length B are possible
   whose value is less than number C.
 NOTE: All numbers can only have digits from the given set.
