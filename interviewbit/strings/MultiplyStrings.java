@@ -23,8 +23,8 @@ public class MultiplyStrings {
         for (int i = m - 1; i >= 0; i--) {
             for (int j = n - 1; j >= 0; j--) {
                 int product = (A.charAt(i) - '0') * (B.charAt(j) - '0');
-                int sum = values[i + j + 1] + product;
-                values[i + j] += sum / 10;
+                int sum = values[i + j + 1] + product; // storing should start from end side or right side or last position
+                values[i + j] += sum / 10; // this is for the carry
                 values[i + j + 1] = sum % 10;
             }
         }
