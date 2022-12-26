@@ -40,6 +40,17 @@ public class KthSmallestElementInTree {
         System.out.println(kthSmallestElementInTree.kthsmallest_UsingStack(root, 3));
     }
 
+    /*
+    Note the property of the binary search tree.
+All elements smaller than root will be in the left subtree, and all elements greater than root will be in the right subtree.
+This means we need not even explore the right subtree till we have explored everything in the left subtree. Or in other words, we go to the right subtree only when the size of left subtree + 1 ( root ) < k.
+
+With that in mind, we can come up with an easy recursive solution which is similar to inorder traversal :
+
+Step 1: Find the kth smallest element in left subtree decrementing k for every node visited. If answer is found, return answer.
+Step 2: Decrement k by 1. If k == 0 ( this node is the kth node visited ), return node’s value
+Step 3: Find the kth smallest element in right subtree.
+     */
     public int kthsmallest(TreeNode root, int i) {
         TreeNode result = kthsmallestNode(root, i);
         return result.val;
