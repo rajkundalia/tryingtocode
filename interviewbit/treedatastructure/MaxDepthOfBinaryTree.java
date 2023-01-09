@@ -29,6 +29,9 @@ public class MaxDepthOfBinaryTree {
         return 1 + Math.max(maxDepth(A.left), maxDepth(A.right));
     }
 
+    /* 
+         Solution 2:
+     */    
     public int maxDepth_1(TreeNode A) {
         return depth(A, 0);
     }
@@ -40,6 +43,22 @@ public class MaxDepthOfBinaryTree {
         int left = depth(node.left, level + 1);
         int right = depth(node.right, level + 1);
         return Math.max(left, right);
+    }
+         
+     /*
+        Solution 3:
+     */
+    public int maxDepth_2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return 1;
+        } else {
+            int l = maxDepth_2(root.left);
+            int r = maxDepth_2(root.right);
+            return (1 + (Math.max(l, r)));
+        }
     }
 
 }
