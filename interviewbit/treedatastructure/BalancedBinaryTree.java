@@ -54,34 +54,28 @@ public class BalancedBinaryTree {
         System.out.println(new BalancedBinaryTree().isBalanced(root));
     }
 
-    public int isBalanced(TreeNode A) {
-        if (A == null) {
-            return 1;
+    public int getHeight(TreeNode a) {
+        if (a == null) {
+            return 0;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(A);
-
-        while (!queue.isEmpty()) {
-            TreeNode current = queue.remove();
-            if (Math.abs(getHeight(current.left) - getHeight(current.right)) > 1) {
-                return 0;
-            }
-
-            if (current.left != null) {
-                queue.add(current.left);
-            }
-            if (current.right != null) {
-                queue.add(current.right);
-            }
+        int left = getHeight(a.left);
+        if (left < 0) {
+            return -1;
         }
-        return 1;
+        int right = getHeight(a.right);
+        if (right < 0) {
+            return -1;
+        }
+        if (Math.abs(left - right) > 1) {
+            return -1;
+        }
+        return Math.max(left, right) + 1;
     }
 
-    private int getHeight(TreeNode a) {
-        if (a == null) {
-            return -1;
-        } else {
-            return 1 + Math.max(getHeight(a.left), getHeight(a.right));
+    public int isBalanced(TreeNode root) {
+        if (getHeight(root) < 0) {
+            return 0;
         }
+        return 1;
     }
 }
