@@ -83,10 +83,12 @@ public class ScrambleString {
         for (int i = 1; i < s1.length(); i++) {
             if (isScramble(s1.substring(0, i), s2.substring(0, i)) == 1
                     && isScramble(s1.substring(i), s2.substring(i)) == 1) {
+                // no swap here i.e. s1 = great, s2 = great
                 return 1;
             }
             if (isScramble(s1.substring(0, i), s2.substring(s2.length() - i)) == 1
                     && isScramble(s1.substring(i), s2.substring(0, s2.length() - i)) == 1) {
+                // swap i.e. s1 = great, s2 = rgeat
                 return 1;
             }
         }
