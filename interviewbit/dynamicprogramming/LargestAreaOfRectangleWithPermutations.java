@@ -54,6 +54,7 @@ Now In this grid, first column is column 1, second column is column 3 and third 
 Now, we can see that if we calculate the max area rectangle, we get max area as 1 * 2 = 2
  which is bigger than the earlier case. Hence 2 will be the answer in this case.
  */
+////https://youtu.be/9vYCQLYF6ng explanation
 public class LargestAreaOfRectangleWithPermutations {
     public static void main(String[] args) {
         System.out.println(new LargestAreaOfRectangleWithPermutations().solve(new ArrayList<>(
