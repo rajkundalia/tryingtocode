@@ -61,18 +61,18 @@ public class DistributeCandy {
             if (A[i] > A[i - 1]) {
                 left[i] = left[i - 1] + 1;
             }
+        }
+        int right = 1;
 
-            int right = 1;
-
-            for (int j = n - 2; j >= 0; j--) {
-                if (A[j] > A[j + 1]) {
-                    right++;
-                    left[j] = Math.max(left[j], right);
-                } else {
-                    right = 1;
-                }
+        for (int j = n - 2; j >= 0; j--) {
+            if (A[j] > A[j + 1]) {
+                right++;
+                left[j] = Math.max(left[j], right);
+            } else {
+                right = 1;
             }
         }
+
 
         int sum = 0;
         for (int j = 0; j < n; j++) {
