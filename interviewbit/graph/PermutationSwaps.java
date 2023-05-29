@@ -61,7 +61,48 @@ public class PermutationSwaps {
         System.out.println(new PermutationSwaps().solve(new int[]{1, 3, 2, 4}, new int[]{1, 4, 2, 3}, new int[][]{{2, 4}}));
     }
 
+ //https://youtu.be/um89Zvy2euk
+ //Permutation Swaps! #InterviewBit Graph Connectivity #Disjoint Set
     public int solve(int[] A, int[] B, int[][] C) {
+        int n = A.length;
+        int[] ds = new int[n + 1];
+
+        for (int i = 1; i <= n; i++) {
+            ds[i] = i;
+        }
+
+        for (int[] x : C) {
+            int el1 = A[x[0] - 1];
+            int el2 = A[x[1] - 1];
+
+            int p1 = findParent(el1, ds);
+            int p2 = findParent(el2, ds);
+
+            if (p1 != p2) {
+                ds[p1] = p2;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (A[i] == B[i]) {
+                continue;
+            } else if (findParent(A[i], ds) == findParent(B[i], ds)) {
+                continue;
+            } else {
+                return 0;
+            }
+        }
+        return 1;
+    }
+
+    private int findParent(int el, int[] ds) {
+        if (ds[el] == el) {
+            return el;
+        }
+        return findParent(ds[el], ds);
+    }
+
+    public int solve1(int[] A, int[] B, int[][] C) {
         int[] parent = new int[A.length + 1];
         int[] rank = new int[A.length + 1];
 
