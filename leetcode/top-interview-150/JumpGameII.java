@@ -28,6 +28,27 @@ public class JumpGameII {
     }
 
     public int jump(int[] nums) {
+        int jumpCount = 0;
+        int leftIdx = 0;
+        int rightIdx = 0;
+        // left index and right index here are the minimum and maximum where a jump can land you
+        // based on the number of steps provided in nums array
+        // https://youtu.be/dJ7sWiOoK7g
+        // Jump Game II - Greedy - Leetcode 45 - by Neetcode
+        while (rightIdx < nums.length - 1) {
+            int farthestIdx = 0;
+            for (int i = leftIdx; i <= rightIdx; i++) {
+                farthestIdx = Math.max(farthestIdx, i + nums[i]);
+            }
+            leftIdx = rightIdx + 1;
+            rightIdx = farthestIdx;
+            jumpCount++;
+        }
+
+        return jumpCount;
+    }
+
+    public int jump1(int[] nums) {
         int n = nums.length; // length of the nums array
         int jumps = 0; // number of jumps needed to reach the end
         int curEnd = 0; // farthest index that can be reached with the current number of jumps
