@@ -38,6 +38,8 @@ public class CourseSchedule {
         System.out.println(new CourseSchedule().canFinish(2, new int[][]{{1, 0}}));
     }
 
+    // https://leetcode.com/problems/course-schedule/solutions/58524/java-dfs-and-bfs-solution/comments/60036
+    // https://youtu.be/iaaObeAEgxI?si=XPv6vWFra9Sp8bRS
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         if(numCourses == 0 || prerequisites == null || prerequisites.length == 0) {
             return true;
