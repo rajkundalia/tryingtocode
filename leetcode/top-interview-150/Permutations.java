@@ -1,5 +1,6 @@
 package leetcode.topinterview150;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -25,6 +26,32 @@ public class Permutations {
     }
 
     public List<List<Integer>> permute(int[] nums) {
-return  null;
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(result, nums, 0);
+        return result;
+    }
+
+    public void backtrack(List<List<Integer>> result, int[] nums, int index) {
+        // base case
+        if (index == nums.length) {
+            List<Integer> list = new ArrayList<>();
+            for (int i = 0; i < nums.length; i++) {
+                list.add(nums[i]);
+            }
+            result.add(list);
+            return;
+        }
+
+        for (int i = index; i < nums.length; i++) {
+            swap(i, index, nums);
+            backtrack(result, nums, index + 1);
+            swap(i, index, nums);
+        }
+    }
+
+    public static void swap(int i, int j, int[] nums) {
+        int t = nums[i];
+        nums[i] = nums[j];
+        nums[j] = t;
     }
 }
